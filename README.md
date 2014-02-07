@@ -11,7 +11,7 @@ This repository contains a php class that fix image orientation by exif data wit
 
 ```php
 $iof = new ImageOrientationFix();
-$fio->fix('foo.jpg');
+$iof->fix('foo.jpg');
 ```
 
 
