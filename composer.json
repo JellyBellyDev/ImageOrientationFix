@@ -1,0 +1,26 @@
+{
+    "name": "JellyBellyDev/FixImageOrientationByExif",
+    "description": "Php class that Fix image orientation by exif data.",
+    "version": "1.0.0",
+    "keywords": ["image", "orientation", "exif"],
+    "homepage": "http://www.github.com/JellyBellyDev/FixImageOrientationByExif",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrea Giannantonio",
+            "email": "a.giannantonio@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        "php": ">=5.0.1",
+        "ext-gd": "*"
+    },
+    "require-dev": {
+        "guzzle/plugin-mock": "*",
+        "phpunit/phpunit": "@stable",
+        "phake/phake": "1.*"
+    }
+}
