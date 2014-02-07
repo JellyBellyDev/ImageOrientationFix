@@ -15,6 +15,7 @@ nbproject
 *.o
 *.so
 composer.lock
+vendor/
 
 # Packages #
 ############

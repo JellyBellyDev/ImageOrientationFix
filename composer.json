@@ -1,5 +1,5 @@
 {
-    "name": "JellyBellyDev/FixImageOrientationByExif",
+    "name": "JellyBellyDev/ImageOrientationFix",
     "description": "Php class that Fix image orientation by exif data.",
     "version": "1.0.0",
     "keywords": ["image", "orientation", "exif"],
@@ -19,8 +19,6 @@
         "ext-gd": "*"
     },
     "require-dev": {
-        "guzzle/plugin-mock": "*",
-        "phpunit/phpunit": "@stable",
-        "phake/phake": "1.*"
+        "phpunit/phpunit": "@stable"
     }
 }
