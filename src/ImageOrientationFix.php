@@ -29,7 +29,6 @@ class ImageOrientationFix
 			}
 			$this->image = new Image($filePathInput);
 			$this->setFilePathOutput($filePathOutput);
-			$this->fix();
 		} catch (Exception $e) {
 			var_dump($e->getMessage());
 			exit;
@@ -247,11 +246,8 @@ class ImageOrientationFix
 	 * @param $filePathOutput
 	 * @throws Exception
 	 */
-	public function setFilePathOutput($filePathOutput)
+	public function setFilePathOutput($filePathOutput = false)
 	{
-		if (!file_exists($filePathOutput)) {
-			throw new Exception('FilePathInput not exists');
-		}
 		$this->filePathOutput = $filePathOutput;
 	}
 

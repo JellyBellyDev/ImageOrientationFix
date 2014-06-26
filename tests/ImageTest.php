@@ -58,14 +58,14 @@ class ImageTest extends PHPUnit_Framework_TestCase
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
 		$exifData = $image->getExifData();
 		$this->assertTrue(is_array($exifData));
-		$this->assertTrue(!empty($exifData));
+		$this->assertNotEmpty($exifData);
 	}
 
 	public function testGetOrientation()
 	{
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
 		$orientation = $image->getOrientation();
-		$this->assertTrue(!empty($orientation));
+		$this->assertNotEmpty($orientation);
 		$this->assertEquals(1, $orientation);
 	}
 
@@ -73,7 +73,7 @@ class ImageTest extends PHPUnit_Framework_TestCase
 	{
 		$image = new Image($this->getInputImagesPath() . 'Landscape_3.jpg');
 		$orientation = $image->getOrientation();
-		$this->assertTrue(!empty($orientation));
+		$this->assertNotEmpty($orientation);
 		$this->assertEquals(3, $orientation);
 	}
 
@@ -81,7 +81,7 @@ class ImageTest extends PHPUnit_Framework_TestCase
 	{
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
 		$extension = $image->getExtension();
-		$this->assertTrue(!empty($extension));
+		$this->assertNotEmpty($extension);
 		$this->assertEquals('jpeg', $extension);
 	}
 
@@ -92,5 +92,14 @@ class ImageTest extends PHPUnit_Framework_TestCase
 	public function getInputImagesPath()
 	{
 		return __DIR__ . INPUT_IMAGES;
+	}
+
+	/**
+	 * OUTPUT_IMAGES is defined in phpunit.xml.dist
+	 * @return string
+	 */
+	public function getOutputImagesPath()
+	{
+		return __DIR__ . OUTPUT_IMAGES;
 	}
 }
