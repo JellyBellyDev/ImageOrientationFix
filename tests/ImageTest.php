@@ -56,29 +56,33 @@ class ImageTest extends PHPUnit_Framework_TestCase
 	public function testGetExifData()
 	{
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-		$this->assertTrue(is_array($image->getExifData()));
-		$this->assertTrue(!empty($image->getExifData()));
+		$exifData = $image->getExifData();
+		$this->assertTrue(is_array($exifData));
+		$this->assertTrue(!empty($exifData));
 	}
 
 	public function testGetOrientation()
 	{
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-		$this->assertTrue(!empty($image->getOrientation()));
-		$this->assertEquals(1, $image->getOrientation());
+		$orientation = $image->getOrientation();
+		$this->assertTrue(!empty($orientation));
+		$this->assertEquals(1, $orientation);
 	}
 
 	public function testGetOrientation3()
 	{
 		$image = new Image($this->getInputImagesPath() . 'Landscape_3.jpg');
-		$this->assertTrue(!empty($image->getOrientation()));
-		$this->assertEquals(3, $image->getOrientation());
+		$orientation = $image->getOrientation();
+		$this->assertTrue(!empty($orientation));
+		$this->assertEquals(3, $orientation);
 	}
 
 	public function testGetExtension()
 	{
 		$image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-		$this->assertTrue(!empty($image->getExtension()));
-		$this->assertEquals('jpeg', $image->getExtension());
+		$extension = $image->getExtension();
+		$this->assertTrue(!empty($extension));
+		$this->assertEquals('jpeg', $extension);
 	}
 
 	/**
