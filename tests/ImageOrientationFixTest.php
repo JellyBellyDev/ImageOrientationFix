@@ -92,6 +92,10 @@ class ImageOrientationFixTest extends PHPUnit_Framework_TestCase
 	 */
 	public function getOutputImagesPath()
 	{
-		return __DIR__ . OUTPUT_IMAGES;
+		$path = __DIR__ . OUTPUT_IMAGES;
+		if (!file_exists($path)) {
+			mkdir($path);
+		}
+		return $path;
 	}
 }
