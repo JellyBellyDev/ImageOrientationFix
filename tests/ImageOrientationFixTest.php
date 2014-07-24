@@ -36,7 +36,7 @@ class ImageOrientationFixTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider dataProviderImages
 	 */
-	public function testImageOrientationFix($filename, $orientation)
+	public function testFix($filename, $orientation)
 	{
 		$time = time();
 		$inputFullFilePath = $this->getInputImagesPath() . $filename;
@@ -61,7 +61,7 @@ class ImageOrientationFixTest extends PHPUnit_Framework_TestCase
 	/**
 	 * @dataProvider dataProviderImages
 	 */
-	public function testImageOrientationFixWithOutput($filename, $orientation)
+	public function testFixWithOutput($filename, $orientation)
 	{
 		$inputFullFilePath = $this->getInputImagesPath() . $filename;
 		$outputFullFilePath = $this->getOutputImagesPath() . $filename;
