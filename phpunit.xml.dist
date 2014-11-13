@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
-	<testsuites>
-		<testsuite name="Image Orientation Fix Test Suite">
-			<directory>./tests</directory>
-		</testsuite>
-	</testsuites>
-	<filter>
-		<whitelist>
-			<directory>./src</directory>
-		</whitelist>
-	</filter>
-	<php>
-		<includePath>.</includePath>
-		<const name="INPUT_IMAGES" value="/input_images/"/>
-		<const name="OUTPUT_IMAGES" value="/output_images/"/>
-	</php>
+    <testsuites>
+        <testsuite name="Image Orientation Fix Test Suite">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>./src</directory>
+        </whitelist>
+    </filter>
+    <php>
+        <includePath>.</includePath>
+        <const name="INPUT_IMAGES" value="/input_images/"/>
+        <const name="OUTPUT_IMAGES" value="/output_images/"/>
+    </php>
 </phpunit>
