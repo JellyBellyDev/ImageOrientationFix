@@ -21,10 +21,10 @@
         }
     },
     "require": {
-        "php": ">=5.0.1",
+        "php": ">=5.2.4",
         "ext-gd": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "@stable"
+        "phpunit/phpunit": "^4.8"
     }
 }

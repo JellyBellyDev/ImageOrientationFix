@@ -23,9 +23,15 @@ class ImageOrientationFix
         try {
             if (!function_exists('imageflip')) {
                 //only php < 5.5
-                define("IMG_FLIP_HORIZONTAL", 1);
-                define("IMG_FLIP_VERTICAL", 2);
-                define("IMG_FLIP_BOTH", 3);
+                if (!defined('IMG_FLIP_HORIZONTAL')) {
+                    define('IMG_FLIP_HORIZONTAL', 1);
+                }
+                if (!defined('IMG_FLIP_VERTICAL')) {
+                    define('IMG_FLIP_VERTICAL', 2);
+                }
+                if (!defined('IMG_FLIP_BOTH')) {
+                    define('IMG_FLIP_BOTH', 3);
+                }
             }
             $this->image = new Image($filePathInput);
             $this->setFilePathOutput($filePathOutput);
@@ -50,20 +56,20 @@ class ImageOrientationFix
             }
 
             // correct orientation
-            if ($this->image->getOrientation() == 1) {
+            if (1 === $this->image->getOrientation()) {
                 return true;
             }
 
             // Set the GD image resource for loaded image
             $this->setResourceImage();
             // If it failed to load a resource, give up
-            if (is_null($this->getResourceImage())) {
+            if (null === $this->getResourceImage()) {
                 throw new Exception('Unable load resource image');
             }
 
             // Set the GD image resource fixed
             $this->setResourceImageFixed();
-            if (is_null($this->getResourceImageFixed())) {
+            if (null === $this->getResourceImageFixed()) {
                 throw new Exception('Unable fix image');
             }
 
@@ -82,14 +88,14 @@ class ImageOrientationFix
     {
         $this->resourceImage = null;
         switch ($this->image->getExtension()) {
-            case "png":
+            case 'png':
                 $this->resourceImage = imagecreatefrompng($this->image->getFilePathInput());
                 break;
-            case "jpg":
-            case "jpeg":
+            case 'jpg':
+            case 'jpeg':
                 $this->resourceImage = imagecreatefromjpeg($this->image->getFilePathInput());
                 break;
-            case "gif":
+            case 'gif':
                 $this->resourceImage = imagecreatefromgif($this->image->getFilePathInput());
                 break;
         }
@@ -161,6 +167,7 @@ class ImageOrientationFix
      * @param $resourceImage
      * @param int $mode - possible parameters: IMG_FLIP_HORIZONTAL || IMG_FLIP_VERTICAL || IMG_FLIP_BOTH
      * @return resource
+     * @throws Exception
      */
     private function executeImageFlip($resourceImage, $mode)
     {
@@ -191,11 +198,11 @@ class ImageOrientationFix
         $size_y = imagesy($resourceImage);
         $temp = imagecreatetruecolor($size_x, $size_y);
         $x = imagecopyresampled($temp, $resourceImage, 0, 0, 0, ($size_y - 1), $size_x, $size_y, $size_x, 0 - $size_y);
-        if ($x) {
-            return $temp;
-        } else {
+        if (!$x) {
             throw new Exception('Unable to flip vertical image');
         }
+
+        return $temp;
     }
 
     /**
@@ -210,11 +217,11 @@ class ImageOrientationFix
         $size_y = imagesy($resourceImage);
         $temp = imagecreatetruecolor($size_x, $size_y);
         $x = imagecopyresampled($temp, $resourceImage, 0, 0, ($size_x - 1), 0, $size_x, $size_y, 0 - $size_x, $size_y);
-        if ($x) {
-            return $temp;
-        } else {
+        if (!$x) {
             throw new Exception('Unable to flip horizontal image');
         }
+
+        return $temp;
     }
 
     /**
@@ -228,14 +235,14 @@ class ImageOrientationFix
 
         $success = false;
         switch ($this->image->getExtension()) {
-            case "png":
+            case 'png':
                 $success = imagepng($this->getResourceImageFixed(), $location);
                 break;
-            case "jpg":
-            case "jpeg":
+            case 'jpg':
+            case 'jpeg':
                 $success = imagejpeg($this->getResourceImageFixed(), $location);
                 break;
-            case "gif":
+            case 'gif':
                 $success = imagegif($this->getResourceImageFixed(), $location);
                 break;
         }
