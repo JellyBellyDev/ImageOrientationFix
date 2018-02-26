@@ -5,6 +5,12 @@ php:
   - 5.4
   - 5.5
 
+matrix:
+  fast_finish: true
+  include:
+    - php: 5.3
+      dist: precise
+
 before_script:
     - curl -s http://getcomposer.org/installer | php
     - php composer.phar install --dev
