@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+
+  #https://github.com/eriksencosta/docker-php-dev
+  php-dev:
+    image: eriksencosta/php-dev:latest
+    container_name: php-dev
+    working_dir: /application
+    volumes:
+      - .:/application:cached
+

@@ -90,7 +90,7 @@ class Image
     private function setOrientation()
     {
         $exifData = $this->getExifData();
-        if (!empty($exifData) && array_key_exists('Orientation', $exifData)) {
+        if ($exifData && is_array($exifData) && array_key_exists('Orientation', $exifData)) {
             if (1 <= $exifData['Orientation'] && $exifData['Orientation'] <= 8) {
                 $this->orientation = ($exifData && isset($exifData['Orientation'])) ? $exifData['Orientation'] : false;
             }
@@ -123,4 +123,4 @@ class Image
     {
         return $this->extension;
     }
-} 
+}
