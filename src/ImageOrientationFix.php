@@ -55,6 +55,11 @@ class ImageOrientationFix
                 return false;
             }
 
+            // do nothing if orientation cannot be determined
+            if (null === $this->image->getOrientation()) {
+                return false;
+            }
+
             // correct orientation
             if (1 === $this->image->getOrientation()) {
                 return true;
