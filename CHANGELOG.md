@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+v1.0.4
+-----
+- Fixup: remove version option by composer.json
+
 v1.0.3
 -----
 - Add CHANGELOG file
