@@ -22,6 +22,22 @@ $iof = new ImageOrientationFix('foo.jpg');
 $iof->fix();
 ```
 
+Contributing
+------------
+
+Dependencies are managed through composer:
+
+```
+$ docker-compose up --build -d
+$ docker-compose exec php-dev composer install
+```
+
+Tests can then be run via phpunit:
+
+```
+$ docker-compose exec php-dev vendor/bin/phpunit
+```
+
 ## Credits
 
 Thanks to [recurser](https://github.com/recurser) for the [image example](https://github.com/recurser/exif-orientation-examples)
