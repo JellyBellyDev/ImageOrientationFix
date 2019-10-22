@@ -35,7 +35,8 @@ $ docker-compose exec php-dev composer install
 Tests can then be run via phpunit:
 
 ```
-$ docker-compose exec php-dev vendor/bin/phpunit
+$ docker-compose exec php-dev bash
+$ vendor/bin/phpunit
 ```
 
 ## Credits
