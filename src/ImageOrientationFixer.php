@@ -23,24 +23,11 @@ class ImageOrientationFixer
 
     public function __construct($filePathInput, $filePathOutput = false)
     {
-        if (!function_exists('imageflip')) {
-            //only php < 5.5
-            if (!defined('IMG_FLIP_HORIZONTAL')) {
-                define('IMG_FLIP_HORIZONTAL', 1);
-            }
-            if (!defined('IMG_FLIP_VERTICAL')) {
-                define('IMG_FLIP_VERTICAL', 2);
-            }
-            if (!defined('IMG_FLIP_BOTH')) {
-                define('IMG_FLIP_BOTH', 3);
-            }
-        }
-
         try {
             $this->image = new Image($filePathInput);
             $this->setFilePathOutput($filePathOutput);
         } catch (Exception $e) {
-            exit;
+            throw $e;
         }
     }
 
@@ -49,7 +36,7 @@ class ImageOrientationFixer
      * @return bool
      * @throws Exception
      */
-    public function fix()
+    public function fix(): bool
     {
         try {
 
@@ -96,14 +83,14 @@ class ImageOrientationFixer
         $this->resourceImage = null;
         switch ($this->image->getExtension()) {
             case 'png':
-                $this->resourceImage = imagecreatefrompng($this->image->getFilePathInput());
+                $this->resourceImage = \imagecreatefrompng($this->image->getFilePathInput());
                 break;
             case 'jpg':
             case 'jpeg':
-                $this->resourceImage = imagecreatefromjpeg($this->image->getFilePathInput());
+                $this->resourceImage = \imagecreatefromjpeg($this->image->getFilePathInput());
                 break;
             case 'gif':
-                $this->resourceImage = imagecreatefromgif($this->image->getFilePathInput());
+                $this->resourceImage = \imagecreatefromgif($this->image->getFilePathInput());
                 break;
         }
     }
@@ -235,10 +222,10 @@ class ImageOrientationFixer
      * Save the new image fixed
      * @return bool
      */
-    private function saveFix()
+    private function saveFix(): bool
     {
         //if isset file path output the location is file path output otherwise override exist file
-        $location = $this->getFilePathOutput() ? $this->getFilePathOutput() : $this->image->getFilePathInput();
+        $location = $this->getFilePathOutput() ?: $this->image->getFilePathInput();
 
         $success = false;
         switch ($this->image->getExtension()) {
@@ -261,7 +248,7 @@ class ImageOrientationFixer
      * @param $filePathOutput
      * @throws Exception
      */
-    public function setFilePathOutput($filePathOutput = false)
+    public function setFilePathOutput($filePathOutput = false): void
     {
         $this->filePathOutput = $filePathOutput;
     }

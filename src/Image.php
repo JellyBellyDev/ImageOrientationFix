@@ -84,7 +84,7 @@ class Image
      */
     private function setExifData(): void
     {
-        $exifData = exif_read_data($this->getFilePathInput(), 'IFD0', 0);
+        $exifData = @exif_read_data($this->getFilePathInput(), 'IFD0', 0);
         if (!empty($exifData) && is_array($exifData)) {
             $this->exifData = $exifData;
         }

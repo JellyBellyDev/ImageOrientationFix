@@ -2,6 +2,7 @@
 
 namespace ImageOrientationFixTest;
 
+use Exception;
 use ImageOrientationFix\ImageOrientationFixer;
 use PHPUnit\Framework\TestCase;
 
@@ -43,16 +44,22 @@ class ImageOrientationFixerTest extends TestCase
 
     /**
      * @dataProvider dataProviderImages
+     * @param string $filename
+     * @param int $orientation
+     * @throws Exception
      */
-    public function testFix($filename, $orientation)
+    public function testFix(string $filename, int $orientation): void
     {
         $time                 = time();
         $inputFullFilePath    = $this->getInputImagesPath() . $filename;
-        $inputFullFilePathTmp = $this->getInputImagesPath() . $time . $filename;
+        $inputFullFilePathTmp = $this->getInputImagesPath() . $time . '_' . $filename;
         copy($inputFullFilePath, $inputFullFilePathTmp);
 
-        $iof = new ImageOrientationFixer($inputFullFilePathTmp);
-        $iof->fix();
+        try {
+            $iof = new ImageOrientationFixer($inputFullFilePathTmp);
+            $iof->fix();
+        } catch (Exception $e) {
+        }
 
         $this->assertFileExists($inputFullFilePathTmp);
         $exifData = exif_read_data($inputFullFilePathTmp, 'IFD0', 0);
@@ -69,19 +76,25 @@ class ImageOrientationFixerTest extends TestCase
     /**
      * @dataProvider dataProviderImages
      */
-    public function testFixWithOutput($filename, $orientation)
+    public function testFixWithOutput($filename, $orientation): void
     {
         $inputFullFilePath  = $this->getInputImagesPath() . $filename;
         $outputFullFilePath = $this->getOutputImagesPath() . $filename;
 
-        $iof = new ImageOrientationFixer($inputFullFilePath, $outputFullFilePath);
-        $iof->fix();
+        try {
+            $iof = new ImageOrientationFixer($inputFullFilePath, $outputFullFilePath);
+            $iof->fix();
+        } catch (Exception $e) {
+        }
 
-        if (1 !== $orientation) {
+        if (1 === $orientation) {
+            $this->markTestSkipped('no action');
+        } else {
             $this->assertFileExists($outputFullFilePath);
             $exifData = exif_read_data($outputFullFilePath, 'IFD0', 0);
             $this->assertFalse($exifData);
         }
+
         @unlink($outputFullFilePath);
     }
 
