@@ -1,17 +1,20 @@
 <?php
 /*
- * Copyright (c) 2014 Andrea Giannantonio
+ * Copyright (c) 2014-2020 Andrea Giannantonio
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
+namespace ImageOrientationFix;
+
+use Exception;
+
 /**
- * Class ImageOrientationFix
- * @see https://github.com/JellyBellyDev/FixImageOrientationByExif
- * @author Andrea Giannantonio a.giannantonio@gmail.com
+ * Class ImageOrientationFixer
+ * @package ImageOrientationFix
  */
-class ImageOrientationFix
+class ImageOrientationFixer
 {
     private $image;
     private $filePathOutput;
@@ -80,7 +83,6 @@ class ImageOrientationFix
 
             // Save the image fixed
             return $this->saveFix();
-
         } catch (Exception $e) {
             throw $e;
         }
@@ -201,8 +203,8 @@ class ImageOrientationFix
     {
         $size_x = imagesx($resourceImage);
         $size_y = imagesy($resourceImage);
-        $temp = imagecreatetruecolor($size_x, $size_y);
-        $x = imagecopyresampled($temp, $resourceImage, 0, 0, 0, ($size_y - 1), $size_x, $size_y, $size_x, 0 - $size_y);
+        $temp   = imagecreatetruecolor($size_x, $size_y);
+        $x      = imagecopyresampled($temp, $resourceImage, 0, 0, 0, ($size_y - 1), $size_x, $size_y, $size_x, 0 - $size_y);
         if (!$x) {
             throw new Exception('Unable to flip vertical image');
         }
@@ -220,8 +222,8 @@ class ImageOrientationFix
     {
         $size_x = imagesx($resourceImage);
         $size_y = imagesy($resourceImage);
-        $temp = imagecreatetruecolor($size_x, $size_y);
-        $x = imagecopyresampled($temp, $resourceImage, 0, 0, ($size_x - 1), 0, $size_x, $size_y, 0 - $size_x, $size_y);
+        $temp   = imagecreatetruecolor($size_x, $size_y);
+        $x      = imagecopyresampled($temp, $resourceImage, 0, 0, ($size_x - 1), 0, $size_x, $size_y, 0 - $size_x, $size_y);
         if (!$x) {
             throw new Exception('Unable to flip horizontal image');
         }
@@ -271,6 +273,4 @@ class ImageOrientationFix
     {
         return $this->filePathOutput;
     }
-
-
 }

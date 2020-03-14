@@ -1,7 +1,6 @@
-ImageOrientationFix
-===================
+#ImageOrientationFix
 
-This repository contains a php class that fix image orientation by exif data with the method [exif_read_data](http://it2.php.net/manual/en/function.exif-read-data.php)
+PHP library to fix image orientation by exif data with thanks to method [exif_read_data](http://it2.php.net/manual/en/function.exif-read-data.php)
 
 [![Build Status](https://travis-ci.org/JellyBellyDev/ImageOrientationFix.svg?branch=master)](https://travis-ci.org/JellyBellyDev/ImageOrientationFix)
 [![Latest Stable Version](https://poser.pugx.org/jellybellydev/image-orientation-fix/v/stable)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
@@ -11,33 +10,52 @@ This repository contains a php class that fix image orientation by exif data wit
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/?branch=master)
 
-## How to use
+## Example
+
+| Input                                  | Output |
+|---                                     |---                                       |
+| ![after](images/input_landscape_3.jpg) | ![output](images/output_landscape_3.jpg) |
+
+
+## How to install
 
 ```bash
 composer require jellybellydev/image-orientation-fix
 ```
 
+
+## How to use
+
 ```php
-$iof = new ImageOrientationFix('foo.jpg');
+use ImageOrientationFix\ImageOrientationFixer;
+
+$iof = new ImageOrientationFixer('foo.jpg');
 $iof->fix();
 ```
 
-Contributing
-------------
+
+## Contributing
 
 Dependencies are managed through composer:
 
 ```
 $ docker-compose up --build -d
-$ docker-compose exec php-dev composer install
+$ docker-compose run php71 composer install
 ```
 
-Tests can then be run via phpunit:
+
+### Run phpunit:
 
 ```
-$ docker-compose exec php-dev bash
-$ vendor/bin/phpunit
+$ docker-compose run php71 composer test
 ```
+
+
+### Run php-cs-fixer
+``` bash
+docker-compose run php71 composer cs-fixer
+```
+
 
 ## Credits
 

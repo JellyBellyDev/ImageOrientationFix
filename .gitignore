@@ -1,4 +1,4 @@
-.php-version
+.php_cs.cache
 composer.lock
 coverage.clover
 /vendor/

@@ -1,20 +1,34 @@
 <?php
+/*
+ * Copyright (c) 2014-2020 Andrea Giannantonio
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
+namespace ImageOrientationFix;
+
+use Exception;
+
+/**
+ * Class Image
+ * @package ImageOrientationFix
+ */
 class Image
 {
     /** @var  string */
-    private $filePathInput = null;
-    private $mimeType = null;
-    private $exifData = null;
-    private $orientation = null;
-    private $extension = null;
-    private static $mimeTypesValid = array(
-        'jpe' => 'image/jpe',
+    private $filePathInput         = null;
+    private $mimeType              = null;
+    private $exifData              = null;
+    private $orientation           = null;
+    private $extension             = null;
+    private static $mimeTypesValid = [
+        'jpe'  => 'image/jpe',
         'jpeg' => 'image/jpeg',
-        'jpg' => 'image/jpg',
+        'jpg'  => 'image/jpg',
         'tiff' => 'image/tiff',
-        'tif' => 'image/tiff',
-    );
+        'tif'  => 'image/tiff',
+    ];
 
     public function __construct($filePathInput)
     {
@@ -29,7 +43,7 @@ class Image
      * @param $filePathInput
      * @throws Exception
      */
-    private function setFilePathInput($filePathInput)
+    private function setFilePathInput($filePathInput): void
     {
         if (!file_exists($filePathInput)) {
             throw new Exception('FilePathInput not exists');
@@ -40,7 +54,7 @@ class Image
     /**
      * @return string
      */
-    public function getFilePathInput()
+    public function getFilePathInput(): string
     {
         return $this->filePathInput;
     }
@@ -48,7 +62,7 @@ class Image
     /**
      * Set the mime type
      */
-    private function setMimeType()
+    private function setMimeType(): void
     {
         $mimeType = MimeType::get($this->getFilePathInput());
         if (empty($mimeType) || !in_array($mimeType, self::$mimeTypesValid)) {
@@ -60,7 +74,7 @@ class Image
     /**
      * @return string
      */
-    public function getMimeType()
+    public function getMimeType(): string
     {
         return $this->mimeType;
     }
@@ -68,7 +82,7 @@ class Image
     /**
      * Set all the exif data from the file
      */
-    private function setExifData()
+    private function setExifData(): void
     {
         $exifData = exif_read_data($this->getFilePathInput(), 'IFD0', 0);
         if (!empty($exifData) && is_array($exifData)) {
@@ -87,7 +101,7 @@ class Image
     /**
      * Set the orientation of image
      */
-    private function setOrientation()
+    private function setOrientation(): void
     {
         $exifData = $this->getExifData();
         if ($exifData && is_array($exifData) && array_key_exists('Orientation', $exifData)) {
@@ -100,7 +114,7 @@ class Image
     /**
      * @return int
      */
-    public function getOrientation()
+    public function getOrientation(): int
     {
         return $this->orientation;
     }
@@ -108,7 +122,7 @@ class Image
     /**
      * Set the extension of the image
      */
-    private function setExtension()
+    private function setExtension(): void
     {
         $r = array_keys(self::$mimeTypesValid, $this->getMimeType());
         if (!empty($r) && isset($r[0])) {
@@ -119,7 +133,7 @@ class Image
     /**
      * @return string
      */
-    public function getExtension()
+    public function getExtension(): string
     {
         return $this->extension;
     }

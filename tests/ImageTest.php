@@ -1,16 +1,18 @@
 <?php
 
-class ImageTest extends PHPUnit_Framework_TestCase
+namespace ImageOrientationFixTest;
+
+use Exception;
+use ImageOrientationFix\Image;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Class ImageTest
+ * @package ImageOrientationFixTest
+ */
+class ImageTest extends TestCase
 {
-    public $fileNameImageLandscape = "Landscape_1.jpg";
-
-    public function setUp()
-    {
-    }
-
-    public function tearDown()
-    {
-    }
+    public $fileNameImageLandscape = 'Landscape_1.jpg';
 
     public function testConstructImageClass()
     {
@@ -48,14 +50,14 @@ class ImageTest extends PHPUnit_Framework_TestCase
 
     public function testSetExifData()
     {
-        $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
+        $image    = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $exifData = exif_read_data($this->getInputImagesPath() . $this->fileNameImageLandscape, 'IFD0', 0);
         $this->assertEquals($exifData, $image->getExifData());
     }
 
     public function testGetExifData()
     {
-        $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
+        $image    = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $exifData = $image->getExifData();
         $this->assertTrue(is_array($exifData));
         $this->assertNotEmpty($exifData);
@@ -63,7 +65,7 @@ class ImageTest extends PHPUnit_Framework_TestCase
 
     public function testGetOrientation()
     {
-        $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
+        $image       = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $orientation = $image->getOrientation();
         $this->assertNotEmpty($orientation);
         $this->assertEquals(1, $orientation);
@@ -71,7 +73,7 @@ class ImageTest extends PHPUnit_Framework_TestCase
 
     public function testGetOrientation3()
     {
-        $image = new Image($this->getInputImagesPath() . 'Landscape_3.jpg');
+        $image       = new Image($this->getInputImagesPath() . 'Landscape_3.jpg');
         $orientation = $image->getOrientation();
         $this->assertNotEmpty($orientation);
         $this->assertEquals(3, $orientation);
@@ -79,7 +81,7 @@ class ImageTest extends PHPUnit_Framework_TestCase
 
     public function testGetExtension()
     {
-        $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
+        $image     = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $extension = $image->getExtension();
         $this->assertNotEmpty($extension);
         $this->assertEquals('jpeg', $extension);

@@ -1,5 +1,10 @@
-CHANGELOG
-=========
+# CHANGELOG
+
+v2.0.0
+-----
+⚠ BREAKING CHANGES
+- Refactoring library to minor php version `7.1`
+- Refactoring to `PSR-4` autoloading
 
 v1.0.4
 -----
