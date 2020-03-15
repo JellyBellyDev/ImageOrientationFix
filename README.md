@@ -63,6 +63,11 @@ docker-compose run php71 composer cs-fixer
 ```
 
 
+## Changelog
+
+Please refer to the [changelog notes](CHANGELOG.md).
+
+
 ## Credits
 
 Thanks to [recurser](https://github.com/recurser) for the [image example](https://github.com/recurser/exif-orientation-examples)

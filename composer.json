@@ -5,7 +5,12 @@
         "image",
         "orientation",
         "exif",
-        "exif_read_data"
+        "exif_read_data",
+        "rotate",
+        "auto-rotate",
+        "auto-adjust",
+        "portrait",
+        "landscape"
     ],
     "homepage": "http://github.com/JellyBellyDev/ImageOrientationFix",
     "license": "MIT",
