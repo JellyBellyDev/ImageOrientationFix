@@ -35,7 +35,7 @@
         "friendsofphp/php-cs-fixer": "^2.16"
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --no-coverage",
+        "test": "vendor/bin/phpunit",
         "test-clover": "vendor/bin/phpunit --coverage-clover=coverage.clover",
         "cs-fixer": "vendor/bin/php-cs-fixer fix --verbose",
         "cs-fixer-dry-run": "vendor/bin/php-cs-fixer fix --verbose --diff --dry-run"
