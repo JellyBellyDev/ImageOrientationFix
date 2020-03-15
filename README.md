@@ -1,4 +1,4 @@
-#ImageOrientationFix
+# ImageOrientationFix
 
 PHP library to fix image orientation by exif data with thanks to method [exif_read_data](http://it2.php.net/manual/en/function.exif-read-data.php)
 
@@ -10,7 +10,7 @@ PHP library to fix image orientation by exif data with thanks to method [exif_re
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/JellyBellyDev/ImageOrientationFix/?branch=master)
 
-## Example
+## Image Example
 
 | Input                                  | Output |
 |---                                     |---                                       |
@@ -32,7 +32,13 @@ use ImageOrientationFix\ImageOrientationFixer;
 $iof = new ImageOrientationFixer('foo.jpg');
 $iof->fix();
 ```
+or
+```php
+use ImageOrientationFix\ImageOrientationFixer;
 
+$iof = new ImageOrientationFixer('/path/foo.jpg', '/path/foo_fixed.jpg');
+$iof->fix();
+```
 
 ## Contributing
 
