@@ -15,7 +15,10 @@ before_install:
   - composer self-update
   - composer install
 
+script:
+    - composer test-clover
+    - composer cs-fixer-dry-run
+
 after_script:
-  - vendor/bin/phpunit --coverage-clover=coverage.clover
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
