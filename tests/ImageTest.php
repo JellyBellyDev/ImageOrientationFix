@@ -5,6 +5,7 @@ namespace ImageOrientationFixTest;
 use Exception;
 use ImageOrientationFix\Image;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 /**
  * Class ImageTest
@@ -12,39 +13,35 @@ use PHPUnit\Framework\TestCase;
  */
 class ImageTest extends TestCase
 {
-    public $fileNameImageLandscape = 'Landscape_1.jpg';
+    public string $fileNameImageLandscape = 'Landscape_1.jpg';
 
     public function testConstructImageClass(): void
     {
         $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-        $this->assertInstanceOf(Image::class, $image);
+        self::assertInstanceOf(Image::class, $image);
     }
 
     public function testGetFilePathInput(): void
     {
         $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-        $this->assertTrue(file_exists($image->getFilePathInput()));
+        self::assertFileExists($image->getFilePathInput());
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testFileExistException(): void
     {
+        $this->expectException(RuntimeException::class);
         $image = new Image($this->getInputImagesPath() . 'ThisFileNotExist.jpg');
     }
 
     public function testSetMimeType(): void
     {
         $image = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
-        $this->assertEquals('image/jpeg', $image->getMimeType());
+        self::assertEquals('image/jpeg', $image->getMimeType());
     }
 
-    /**
-     * @expectedException Exception
-     */
     public function testMimeTypeNotValidException(): void
     {
+        $this->expectException(RuntimeException::class);
         $image = new Image($this->getInputImagesPath() . 'mimeTypeNotValid.gif');
     }
 
@@ -52,39 +49,39 @@ class ImageTest extends TestCase
     {
         $image    = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $exifData = exif_read_data($this->getInputImagesPath() . $this->fileNameImageLandscape, 'IFD0', 0);
-        $this->assertEquals($exifData, $image->getExifData());
+        self::assertEquals($exifData, $image->getExifData());
     }
 
     public function testGetExifData(): void
     {
         $image    = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $exifData = $image->getExifData();
-        $this->assertTrue(is_array($exifData));
-        $this->assertNotEmpty($exifData);
+        self::assertIsArray($exifData);
+        self::assertNotEmpty($exifData);
     }
 
     public function testGetOrientation(): void
     {
         $image       = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $orientation = $image->getOrientation();
-        $this->assertNotEmpty($orientation);
-        $this->assertEquals(1, $orientation);
+        self::assertNotEmpty($orientation);
+        self::assertEquals(1, $orientation);
     }
 
     public function testGetOrientation3(): void
     {
         $image       = new Image($this->getInputImagesPath() . 'Landscape_3.jpg');
         $orientation = $image->getOrientation();
-        $this->assertNotEmpty($orientation);
-        $this->assertEquals(3, $orientation);
+        self::assertNotEmpty($orientation);
+        self::assertEquals(3, $orientation);
     }
 
     public function testGetExtension(): void
     {
         $image     = new Image($this->getInputImagesPath() . $this->fileNameImageLandscape);
         $extension = $image->getExtension();
-        $this->assertNotEmpty($extension);
-        $this->assertEquals('jpeg', $extension);
+        self::assertNotEmpty($extension);
+        self::assertEquals('jpeg', $extension);
     }
 
     /**

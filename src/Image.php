@@ -8,7 +8,7 @@
 
 namespace ImageOrientationFix;
 
-use Exception;
+use RuntimeException;
 
 /**
  * Class Image
@@ -16,13 +16,12 @@ use Exception;
  */
 class Image
 {
-    /** @var  string */
-    private $filePathInput         = null;
-    private $mimeType              = null;
-    private $exifData              = null;
-    private $orientation           = null;
-    private $extension             = null;
-    private static $mimeTypesValid = [
+    private ?string $filePathInput       = null;
+    private ?string $mimeType            = null;
+    private $exifData                    = null;
+    private ?int $orientation            = null;
+    private ?string $extension           = null;
+    private static array $mimeTypesValid = [
         'jpe'  => 'image/jpe',
         'jpeg' => 'image/jpeg',
         'jpg'  => 'image/jpg',
@@ -41,12 +40,12 @@ class Image
 
     /**
      * @param $filePathInput
-     * @throws Exception
+     * @throws RuntimeException
      */
     private function setFilePathInput($filePathInput): void
     {
         if (!file_exists($filePathInput)) {
-            throw new Exception('FilePathInput not exists');
+            throw new RuntimeException('FilePathInput not exists');
         }
         $this->filePathInput = $filePathInput;
     }
@@ -65,8 +64,8 @@ class Image
     private function setMimeType(): void
     {
         $mimeType = MimeType::get($this->getFilePathInput());
-        if (empty($mimeType) || !in_array($mimeType, self::$mimeTypesValid)) {
-            throw new Exception("$mimeType: mimeType not valid");
+        if (empty($mimeType) || !in_array($mimeType, self::$mimeTypesValid, true)) {
+            throw new RuntimeException("$mimeType: mimeType not valid");
         }
         $this->mimeType = $mimeType;
     }
@@ -104,17 +103,15 @@ class Image
     private function setOrientation(): void
     {
         $exifData = $this->getExifData();
-        if ($exifData && is_array($exifData) && array_key_exists('Orientation', $exifData)) {
-            if (1 <= $exifData['Orientation'] && $exifData['Orientation'] <= 8) {
-                $this->orientation = ($exifData && isset($exifData['Orientation'])) ? $exifData['Orientation'] : false;
-            }
+        if ($exifData && is_array($exifData) && array_key_exists('Orientation', $exifData) && 1 <= $exifData['Orientation'] && $exifData['Orientation'] <= 8) {
+            $this->orientation = $exifData['Orientation'];
         }
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getOrientation(): int
+    public function getOrientation(): ?int
     {
         return $this->orientation;
     }
@@ -131,9 +128,9 @@ class Image
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getExtension(): string
+    public function getExtension(): ?string
     {
         return $this->extension;
     }

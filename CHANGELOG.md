@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.0
+⚠ BREAKING CHANGES
+- Refactoring library to minor php version `7.4`
+
 ## v2.0.0
 ⚠ BREAKING CHANGES
 - Refactoring library to minor php version `7.1`
