@@ -12,14 +12,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ImageOrientationFixerTest extends TestCase
 {
-    public function setUp()
-    {
-    }
-
-    public function tearDown()
-    {
-    }
-
     public function dataProviderImages(): array
     {
         return [
@@ -61,13 +53,13 @@ class ImageOrientationFixerTest extends TestCase
         } catch (Exception $e) {
         }
 
-        $this->assertFileExists($inputFullFilePathTmp);
+        self::assertFileExists($inputFullFilePathTmp);
         $exifData = exif_read_data($inputFullFilePathTmp, 'IFD0', 0);
 
         if (1 === $orientation) {
-            $this->assertEquals($orientation, $exifData['Orientation']);
+            self::assertEquals($orientation, $exifData['Orientation']);
         } else {
-            $this->assertFalse($exifData);
+            self::assertFalse($exifData);
         }
 
         @unlink($inputFullFilePathTmp);
@@ -75,8 +67,10 @@ class ImageOrientationFixerTest extends TestCase
 
     /**
      * @dataProvider dataProviderImages
+     * @param string $filename
+     * @param int $orientation
      */
-    public function testFixWithOutput($filename, $orientation): void
+    public function testFixWithOutput(string $filename, int $orientation): void
     {
         $inputFullFilePath  = $this->getInputImagesPath() . $filename;
         $outputFullFilePath = $this->getOutputImagesPath() . $filename;
@@ -88,11 +82,11 @@ class ImageOrientationFixerTest extends TestCase
         }
 
         if (1 === $orientation) {
-            $this->markTestSkipped('no action');
+            self::markTestSkipped('no action');
         } else {
-            $this->assertFileExists($outputFullFilePath);
+            self::assertFileExists($outputFullFilePath);
             $exifData = exif_read_data($outputFullFilePath, 'IFD0', 0);
-            $this->assertFalse($exifData);
+            self::assertFalse($exifData);
         }
 
         @unlink($outputFullFilePath);

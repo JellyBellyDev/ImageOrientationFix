@@ -8,7 +8,7 @@
 
 namespace ImageOrientationFix;
 
-use Exception;
+use RuntimeException;
 
 /**
  * Class ImageOrientationFixer
@@ -16,17 +16,17 @@ use Exception;
  */
 class ImageOrientationFixer
 {
-    private $image;
-    private $filePathOutput;
-    private $resourceImage;
-    private $resourceImageFixed;
+    private Image $image;
+    private ?string $filePathOutput = null;
+    private $resourceImage          = null;
+    private $resourceImageFixed     = null;
 
-    public function __construct($filePathInput, $filePathOutput = false)
+    public function __construct($filePathInput, $filePathOutput = null)
     {
         try {
             $this->image = new Image($filePathInput);
             $this->setFilePathOutput($filePathOutput);
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             throw $e;
         }
     }
@@ -34,7 +34,7 @@ class ImageOrientationFixer
     /**
      * Function manager to fix orientation image
      * @return bool
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function fix(): bool
     {
@@ -59,18 +59,18 @@ class ImageOrientationFixer
             $this->setResourceImage();
             // If it failed to load a resource, give up
             if (null === $this->getResourceImage()) {
-                throw new Exception('Unable load resource image');
+                throw new RuntimeException('Unable load resource image');
             }
 
             // Set the GD image resource fixed
             $this->setResourceImageFixed();
             if (null === $this->getResourceImageFixed()) {
-                throw new Exception('Unable fix image');
+                throw new RuntimeException('Unable fix image');
             }
 
             // Save the image fixed
             return $this->saveFix();
-        } catch (Exception $e) {
+        } catch (RuntimeException $e) {
             throw $e;
         }
     }
@@ -78,9 +78,8 @@ class ImageOrientationFixer
     /**
      * Set the GD image resource for loaded image
      */
-    private function setResourceImage()
+    private function setResourceImage(): void
     {
-        $this->resourceImage = null;
         switch ($this->image->getExtension()) {
             case 'png':
                 $this->resourceImage = \imagecreatefrompng($this->image->getFilePathInput());
@@ -96,7 +95,7 @@ class ImageOrientationFixer
     }
 
     /**
-     * @return mixed
+     * @return resource|false|null an image resource identifier on success, false on errors or null if extension id not recognized
      */
     public function getResourceImage()
     {
@@ -106,9 +105,8 @@ class ImageOrientationFixer
     /**
      * Set the resource image fixed
      */
-    private function setResourceImageFixed()
+    private function setResourceImageFixed(): void
     {
-        $this->resourceImageFixed = null;
         switch ($this->image->getOrientation()) {
             // horizontal flip
             case 2:
@@ -150,7 +148,7 @@ class ImageOrientationFixer
     }
 
     /**
-     * @return mixed
+     * @return resource|false|null an image resource identifier on success, false on errors or null if extension id not recognized
      */
     public function getResourceImageFixed()
     {
@@ -158,21 +156,21 @@ class ImageOrientationFixer
     }
 
     /**
-     * @param $resourceImage
+     * @param resource|false|null $resourceImage
      * @param int $mode - possible parameters: IMG_FLIP_HORIZONTAL || IMG_FLIP_VERTICAL || IMG_FLIP_BOTH
      * @return resource
-     * @throws Exception
+     * @throws RuntimeException
      */
-    private function executeImageFlip($resourceImage, $mode)
+    private function executeImageFlip($resourceImage, int $mode)
     {
         if (function_exists('imageflip')) {
             //only php >= 5.5
             imageflip($resourceImage, $mode);
         } else {
-            if ($mode == IMG_FLIP_VERTICAL || $mode == IMG_FLIP_BOTH) {
+            if ($mode === IMG_FLIP_VERTICAL || $mode === IMG_FLIP_BOTH) {
                 $resourceImage = $this->flipVertical($resourceImage);
             }
-            if ($mode == IMG_FLIP_HORIZONTAL || $mode == IMG_FLIP_BOTH) {
+            if ($mode === IMG_FLIP_HORIZONTAL || $mode === IMG_FLIP_BOTH) {
                 $resourceImage = $this->flipHorizontal($resourceImage);
             }
         }
@@ -182,9 +180,9 @@ class ImageOrientationFixer
 
     /**
      * Flip vertical
-     * @param $resourceImage
+     * @param resource|false|null $resourceImage
      * @return resource
-     * @throws Exception
+     * @throws RuntimeException
      */
     private function flipVertical($resourceImage)
     {
@@ -193,7 +191,7 @@ class ImageOrientationFixer
         $temp   = imagecreatetruecolor($size_x, $size_y);
         $x      = imagecopyresampled($temp, $resourceImage, 0, 0, 0, ($size_y - 1), $size_x, $size_y, $size_x, 0 - $size_y);
         if (!$x) {
-            throw new Exception('Unable to flip vertical image');
+            throw new RuntimeException('Unable to flip vertical image');
         }
 
         return $temp;
@@ -201,9 +199,9 @@ class ImageOrientationFixer
 
     /**
      * Flip horizontal
-     * @param $resourceImage
+     * @param resource|false|null $resourceImage
      * @return resource
-     * @throws Exception
+     * @throws RuntimeException
      */
     private function flipHorizontal($resourceImage)
     {
@@ -212,7 +210,7 @@ class ImageOrientationFixer
         $temp   = imagecreatetruecolor($size_x, $size_y);
         $x      = imagecopyresampled($temp, $resourceImage, 0, 0, ($size_x - 1), 0, $size_x, $size_y, 0 - $size_x, $size_y);
         if (!$x) {
-            throw new Exception('Unable to flip horizontal image');
+            throw new RuntimeException('Unable to flip horizontal image');
         }
 
         return $temp;
@@ -245,18 +243,17 @@ class ImageOrientationFixer
     }
 
     /**
-     * @param $filePathOutput
-     * @throws Exception
+     * @param string|null $filePathOutput
      */
-    public function setFilePathOutput($filePathOutput = false): void
+    public function setFilePathOutput(?string $filePathOutput): void
     {
         $this->filePathOutput = $filePathOutput;
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getFilePathOutput()
+    public function getFilePathOutput(): ?string
     {
         return $this->filePathOutput;
     }

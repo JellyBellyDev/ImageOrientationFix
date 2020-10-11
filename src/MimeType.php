@@ -17,7 +17,7 @@ class MimeType
     /**
      * @var array
      */
-    public static $mimeTypes = [
+    public static array $mimeTypes = [
         'txt'  => 'text/plain',
         'htm'  => 'text/html',
         'html' => 'text/html',
@@ -77,14 +77,16 @@ class MimeType
 
         if (array_key_exists($extension, self::$mimeTypes)) {
             return self::$mimeTypes[$extension];
-        } elseif (function_exists('finfo_open') && is_file($filename)) {
+        }
+
+        if (function_exists('finfo_open') && is_file($filename)) {
             $finfo    = finfo_open(FILEINFO_MIME);
             $mimetype = finfo_file($finfo, $filename);
             finfo_close($finfo);
 
             return $mimetype;
-        } else {
-            return 'application/octet-stream';
         }
+
+        return 'application/octet-stream';
     }
 }

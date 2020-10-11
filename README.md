@@ -12,9 +12,7 @@ PHP library to fix image orientation by exif data with thanks to method [exif_re
 
 ## Image Example
 
-| Input                                  | Output |
-|---                                     |---                                       |
-| ![after](images/input_landscape_3.jpg) | ![output](images/output_landscape_3.jpg) |
+![after](images/after_and_before.png)
 
 
 ## How to install
@@ -46,20 +44,20 @@ Dependencies are managed through composer:
 
 ```
 $ docker-compose up --build -d
-$ docker-compose run php71 composer install
+$ docker-compose run php74 composer install
 ```
 
 
 ### Run phpunit:
 
 ```
-$ docker-compose run php71 composer test
+$ docker-compose run php74 composer test
 ```
 
 
 ### Run php-cs-fixer
 ``` bash
-docker-compose run php71 composer cs-fixer
+docker-compose run php74 composer cs-fixer
 ```
 
 
