@@ -19,6 +19,12 @@
         </whitelist>
     </filter>
 
+    <coverage>
+        <include>
+            <directory suffix=".php">./src/</directory>
+        </include>
+    </coverage>
+
     <php>
         <includePath>.</includePath>
         <const name="INPUT_IMAGES" value="/input_images/"/>

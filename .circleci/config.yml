@@ -1,0 +1,78 @@
+version: 2.1
+
+executors:
+  iof_executor: # declares a reusable executor
+    docker:
+      - image: jellybellydev/imageorientationfix:1.0
+    working_directory: ~/app
+
+jobs:
+  checkout_code:
+    executor: iof_executor
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/app
+
+  php_dependencies:
+    executor: iof_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: install project dependencies
+          command: composer install -n --no-progress --no-suggest
+      - save_cache:
+          paths:
+            - ~/app/vendor
+          key: v1-php-dependencies-{{ .Environment.CIRCLE_SHA1 }}
+
+  lint_checks:
+    executor: iof_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v1-php-dependencies-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: run php-cs-fixer checks
+          command: bin/php-cs-fixer fix --verbose --diff --dry-run
+
+  phpunit:
+    executor: iof_executor
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          name: Restore PHP Dependencies Cache
+          keys:
+            - v1-php-dependencies-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: run phpunit tests
+          command: vendor/bin/phpunit -d memory_limit=-1 --coverage-clover clover.xml
+      - run:
+          name: upload coverage to codecov
+          when: on_success
+          command: bash <(curl -s https://codecov.io/bash)
+
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - checkout_code
+      - php_dependencies:
+          requires:
+            - checkout_code
+      - lint_checks:
+          requires:
+            - php_dependencies
+      - phpunit:
+          requires:
+            - php_dependencies
