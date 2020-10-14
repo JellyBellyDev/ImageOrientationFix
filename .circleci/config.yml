@@ -42,7 +42,7 @@ jobs:
             - v1-php-dependencies-{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: run php-cs-fixer checks
-          command: bin/php-cs-fixer fix --verbose --diff --dry-run
+          command: vendor/bin/php-cs-fixer fix --verbose --diff --dry-run
 
   phpunit:
     executor: iof_executor
