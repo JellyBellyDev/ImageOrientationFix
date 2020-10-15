@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.1
+- Replace TravisCI and Scrutinizer with CircleCi and Codecov
+- Published docker image `jellybellydev/imageorientationfix:1.0` starting from file `.docker/php74/Dockerfile`
+
 ## v3.0.0
 ⚠ BREAKING CHANGES
 - Refactoring library to minor php version `7.4`
