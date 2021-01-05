@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.0
+- Replace CircleCi with GitHub Actions
+- Add compatibility with PHP 8.0
+
 ## v3.0.1
 - Replace TravisCI and Scrutinizer with CircleCi and Codecov
 - Published docker image `jellybellydev/imageorientationfix:1.0` starting from file `.docker/php74/Dockerfile`
