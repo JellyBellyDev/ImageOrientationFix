@@ -4,6 +4,7 @@ PHP library to fix image orientation by exif data with thanks to method [exif_re
 
 [![Gitbub actions](https://github.com/JellyBellyDev/ImageOrientationFix/workflows/Build/badge.svg)](https://github.com/JellyBellyDev/ImageOrientationFix/actions)
 [![Latest Stable Version](https://poser.pugx.org/jellybellydev/image-orientation-fix/v/stable)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
+[![PHP Version Require](http://poser.pugx.org/jellybellydev/image-orientation-fix/require/php)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
 [![Total Downloads](https://poser.pugx.org/jellybellydev/image-orientation-fix/downloads)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
 [![composer.lock](https://poser.pugx.org/jellybellydev/image-orientation-fix/composerlock)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
 [![License](https://poser.pugx.org/jellybellydev/image-orientation-fix/license)](https://packagist.org/packages/jellybellydev/image-orientation-fix)
