@@ -10,7 +10,8 @@
         "auto-rotate",
         "auto-adjust",
         "portrait",
-        "landscape"
+        "landscape",
+        "ImageOrientationFix"
     ],
     "homepage": "http://github.com/JellyBellyDev/ImageOrientationFix",
     "license": "MIT",
