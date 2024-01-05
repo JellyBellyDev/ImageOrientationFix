@@ -17,8 +17,8 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          git-user-name: ${{ secrets.GITHUB_ACTOR }}
-          git-user-email: ${{ secrets.GITHUB_ACTOR }}@users.noreply.github.com
+          git-user-name: ${{ github.actor }}
+          git-user-email: ${{ github.actor }}@users.noreply.github.com
           tag-prefix: 'v'
           input-file: 'CHANGELOG.md'
           output-file: 'CHANGELOG.md'
