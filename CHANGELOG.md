@@ -1,3 +1,18 @@
+# [3.2.0](https://github.com/JellyBellyDev/ImageOrientationFix/compare/v3.1.0...v3.2.0) (2024-01-05)
+
+
+### Bug Fixes
+
+* **ci:** generate release action ([84f6685](https://github.com/JellyBellyDev/ImageOrientationFix/commit/84f6685bea1d755559ee1e891c06a0155807e5d1))
+* **ci:** github.actor ([17f9c4c](https://github.com/JellyBellyDev/ImageOrientationFix/commit/17f9c4c04e896defca1544435c09aacb8b4e39d5))
+
+
+### Features
+
+* **ci:** create release action ([429b2e1](https://github.com/JellyBellyDev/ImageOrientationFix/commit/429b2e1136a529a04bf460d5ad4b71f2f1ff94af))
+
+
+
 # CHANGELOG
 
 ## [3.2.0](https://github.com/JellyBellyDev/ImageOrientationFix/compare/v3.1.0...3.2.0) (2024-01-05)
