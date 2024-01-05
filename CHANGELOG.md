@@ -1,3 +1,10 @@
+## [3.2.1](https://github.com/JellyBellyDev/ImageOrientationFix/compare/v3.2.0...v3.2.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* **ci:** change preset conventional changelog ([be6e031](https://github.com/JellyBellyDev/ImageOrientationFix/commit/be6e03125acdddb42d60a6740936736072cf4c26))
+
 ## [3.2.0](https://github.com/JellyBellyDev/ImageOrientationFix/compare/v3.1.0...v3.2.0) (2024-01-05)
 
 ### Bug Fixes
