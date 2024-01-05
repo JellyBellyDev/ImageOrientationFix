@@ -16,6 +16,7 @@ jobs:
         id: changelog
         uses: TriPSs/conventional-changelog-action@v5
         with:
+          preset: conventionalcommits
           github-token: ${{ secrets.GITHUB_TOKEN }}
           git-user-name: ${{ github.actor }}
           git-user-email: ${{ github.actor }}@users.noreply.github.com
